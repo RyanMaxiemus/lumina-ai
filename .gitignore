@@ -23,6 +23,7 @@ __pycache__/
 # Project specific
 conversations/
 config.json
+CLAUDE.md
 
 # OS generated files
 .DS_Store
