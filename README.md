@@ -14,7 +14,7 @@ Lumina AI is a powerful, locally-hosted desktop chat application designed to int
 1. Ensure you have [Ollama](https://ollama.com/) installed and running locally.
 2. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/lumina-ai.git
+   git clone https://github.com/RyanMaxiemus/lumina-ai.git
    cd lumina-ai
    ```
 3. Create a virtual environment and install dependencies:
