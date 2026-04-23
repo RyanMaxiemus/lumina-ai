@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#767575",
+              "secondary-dim": "#599ffb",
+              "tertiary-fixed": "#bca2ff",
+              "surface-dim": "#0e0e0e",
+              "on-primary-fixed": "#000000",
+              "on-tertiary-fixed-variant": "#43208b",
+              "on-primary": "#003151",
+              "inverse-primary": "#00639e",
+              "surface-container-high": "#20201f",
+              "secondary-fixed": "#b9d3ff",
+              "on-primary-fixed-variant": "#002e4d",
+              "secondary": "#599ffb",
+              "primary-fixed-dim": "#0099f0",
+              "on-tertiary": "#3a1482",
+              "on-secondary-container": "#f6f7ff",
+              "primary-dim": "#15a4ff",
+              "secondary-container": "#005fb0",
+              "tertiary": "#bca2ff",
+              "outline-variant": "#484847",
+              "on-primary-container": "#00253f",
+              "inverse-on-surface": "#565555",
+              "primary": "#5eb4ff",
+              "primary-container": "#2aa7ff",
+              "error-dim": "#d7383b",
+              "surface-container-highest": "#262626",
+              "surface-container-lowest": "#000000",
+              "surface-variant": "#262626",
+              "on-surface-variant": "#adaaaa",
+              "on-tertiary-fixed": "#1e0053",
+              "tertiary-container": "#b091ff",
+              "on-error-container": "#ffa8a3",
+              "error-container": "#9f0519",
+              "background": "#0e0e0e",
+              "surface-container": "#1a1a1a",
+              "surface-container-low": "#131313",
+              "on-tertiary-container": "#2e0075",
+              "tertiary-fixed-dim": "#b091ff",
+              "on-secondary-fixed-variant": "#005197",
+              "primary-fixed": "#2aa7ff",
+              "on-background": "#ffffff",
+              "on-secondary": "#002043",
+              "tertiary-dim": "#ab8bf9",
+              "surface-tint": "#5eb4ff",
+              "error": "#ff716c",
+              "on-secondary-fixed": "#003466",
+              "on-surface": "#ffffff",
+              "inverse-surface": "#fcf9f8",
+              "on-error": "#490006",
+              "secondary-fixed-dim": "#a1c5ff",
+              "surface": "#0e0e0e",
+              "surface-bright": "#2c2c2c"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0e0e0e;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px 0 rgba(94, 180, 255, 0.15);
+            transition: all 0.3s ease-in-out;
+        }
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 9999;
+        }
+        .glass-input {
+            backdrop-filter: blur(20px);
+            background: rgba(38, 38, 38, 0.6);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<div class="noise-overlay"></div>
+<div class="flex h-screen w-full bg-surface">
+<!-- SideNavBar -->
+<aside class="w-72 bg-surface-container-low flex flex-col border-r border-outline-variant/10 z-20">
+<div class="p-6 flex flex-col h-full">
+<!-- Header Branding -->
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(94,180,255,0.3)]">
+<span class="material-symbols-outlined text-on-primary font-bold">bolt</span>
+</div>
+<div>
+<h1 class="text-on-surface font-semibold tracking-tight leading-tight">AI Chatbot</h1>
+<p class="text-on-surface-variant text-[11px] font-medium tracking-widest">v2.0</p>
+</div>
+</div>
+<!-- Main Actions -->
+<button class="w-full bg-surface-container-highest hover:bg-surface-container-high transition-all py-3 px-4 rounded-xl flex items-center gap-3 group mb-8 glow-hover border border-outline-variant/5">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">add</span>
+<span class="text-on-surface font-medium text-sm">New Chat</span>
+</button>
+<!-- Navigation Tabs -->
+<nav class="flex-1 space-y-2 overflow-y-auto">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container text-primary font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="text-sm">History</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm">Settings</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm">Help</span>
+</div>
+</div>
+<!-- History Group -->
+<div class="mt-8">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest px-4 mb-4">Recent History</p>
+<div class="space-y-1">
+<div class="px-4 py-2.5 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container/40 hover:text-on-surface cursor-pointer truncate">Project Architecture Review</div>
+<div class="px-4 py-2.5 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container/40 hover:text-on-surface cursor-pointer truncate">Luminous UI Design Strategy</div>
+<div class="px-4 py-2.5 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container/40 hover:text-on-surface cursor-pointer truncate">Python Script Optimization</div>
+</div>
+</div>
+</nav>
+<!-- Footer -->
+<div class="pt-6 border-t border-outline-variant/10">
+<div class="flex items-center gap-3 p-2 mb-4">
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-primary/20" data-alt="Professional male portrait avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC18jM5tQ1BVuXV1lhBRkpzqPwGuZyXlegtbnK6fNjOd1zVdfe5d3N7dR6pX1VqzeaVzad9E0moG7E8_rcN5jTj5jumFaRpN1beKxjMabghlBRhEuo91Olnzprq7H8G-uv1mVLJQItlw6dInoD6D61XrfMR9MR-mvwuKihpEs_BDR5lWNxY-kqHxyne7k0coc4nUuNWBjy-ahEeupW8Yy_frbbNTfNJi1ByfEgjckwi1CjiPGQT65Qtki4b_OZtAHdnvfJBa0IBt1nc"/>
+<span class="text-sm font-medium text-on-surface">Alex River</span>
+</div>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-error-dim hover:bg-error-container/10 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm">Log out</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col bg-surface relative overflow-hidden">
+<!-- TopNavBar -->
+<header class="h-16 flex items-center justify-between px-8 bg-surface/80 backdrop-blur-md border-b border-outline-variant/5 z-10">
+<div class="flex items-center gap-2">
+<span class="text-on-surface font-semibold tracking-tight">ChatAI</span>
+<span class="h-4 w-[1px] bg-outline-variant/20 mx-2"></span>
+<span class="text-on-surface-variant text-xs font-medium">Untitled Chat</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">light_mode</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">minimize</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</header>
+<!-- Chat Stage -->
+<div class="flex-1 overflow-y-auto px-6 py-12 scroll-smooth">
+<div class="max-w-4xl mx-auto space-y-12">
+<!-- AI Greeting / Empty State -->
+<div class="text-center py-20">
+<h2 class="text-[2.75rem] font-bold tracking-tight text-on-surface leading-none mb-6">How can I help you today?</h2>
+<p class="text-on-surface-variant max-w-lg mx-auto leading-relaxed">I am your Luminous Observer—a sophisticated digital companion designed for high-level technical analysis and creative strategy.</p>
+<div class="grid grid-cols-2 gap-4 mt-12 max-w-2xl mx-auto">
+<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/5 hover:border-primary/20 transition-all cursor-pointer text-left group">
+<span class="material-symbols-outlined text-primary mb-3">auto_awesome</span>
+<h3 class="text-on-surface font-medium mb-1">Generate Strategy</h3>
+<p class="text-on-surface-variant text-xs">Create a marketing plan for a fintech app.</p>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/5 hover:border-primary/20 transition-all cursor-pointer text-left group">
+<span class="material-symbols-outlined text-primary mb-3">code</span>
+<h3 class="text-on-surface font-medium mb-1">Debug Python</h3>
+<p class="text-on-surface-variant text-xs">Find logical errors in async functions.</p>
+</div>
+</div>
+</div>
+<!-- Conversation -->
+<div class="space-y-10">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2">
+<div class="bg-surface-container-highest px-6 py-4 rounded-2xl max-w-[80%] shadow-sm">
+<p class="text-on-surface text-[1.125rem]">Can you explain the difference between CSS Grid and Flexbox for high-fidelity dashboards?</p>
+</div>
+<span class="text-[0.6875rem] text-on-surface-variant mr-2">10:42 AM</span>
+</div>
+<!-- AI Message -->
+<div class="flex flex-col items-start gap-4">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary">smart_toy</span>
+</div>
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Luminous AI</span>
+</div>
+<div class="max-w-[90%] space-y-4">
+<p class="text-on-surface body-lg leading-[1.6]">For high-fidelity dashboards, the choice between **Grid** and **Flexbox** hinges on the structural axis of your information hierarchy:</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+<div class="p-4 bg-surface-container/40 rounded-xl border-l-2 border-primary">
+<h4 class="text-primary font-bold text-sm mb-2">CSS Grid</h4>
+<p class="text-on-surface-variant text-sm">Best for the 2D layout. Use it for the macro-shell (Sidebar + Header + Main Canvas + Info Panels).</p>
+</div>
+<div class="p-4 bg-surface-container/40 rounded-xl border-l-2 border-tertiary">
+<h4 class="text-tertiary font-bold text-sm mb-2">Flexbox</h4>
+<p class="text-on-surface-variant text-sm">Best for 1D content alignment. Use it for micro-components like toolbars, list items, and status chips.</p>
+</div>
+</div>
+<p class="text-on-surface body-lg leading-[1.6]">In this "Luminous Observer" system, we use Grid to define our rigid structural boundaries while allowing Flexbox to handle the rhythmic spacing between conversation bubbles.</p>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">thumb_up</span> Helpful
+                                </button>
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-error transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">thumb_down</span>
+</button>
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">content_copy</span> Copy
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input Area -->
+<div class="p-6 relative bg-gradient-to-t from-surface to-transparent">
+<div class="max-w-4xl mx-auto">
+<div class="glass-input rounded-[2rem] p-2 border border-outline-variant/10 shadow-2xl relative overflow-hidden group">
+<!-- Bottom focus line -->
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] w-0 bg-primary group-focus-within:w-full transition-all duration-500"></div>
+<div class="flex items-end gap-2 px-4 py-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors glow-hover">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant py-2.5 max-h-32 resize-none text-[1.125rem]" placeholder="Message ChatAI..." rows="1"></textarea>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_0_20px_rgba(94,180,255,0.2)] hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<div class="flex justify-center mt-3">
+<p class="text-[10px] text-on-surface-variant/60 font-medium">ChatAI can make mistakes. Check important info.</p>
+</div>
+</div>
+</div>
+<!-- Ambient Atmospheric Elements -->
+<div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="absolute -bottom-40 -left-40 w-96 h-96 bg-tertiary/5 blur-[120px] rounded-full pointer-events-none"></div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "secondary-fixed-dim": "#bac8d3",
+                "inverse-surface": "#2f3131",
+                "inverse-on-surface": "#f1f1f1",
+                "on-error": "#ffffff",
+                "on-surface": "#1a1c1c",
+                "surface-bright": "#f9f9f9",
+                "primary": "#005bbf",
+                "surface": "#f9f9f9",
+                "surface-tint": "#005bc0",
+                "on-secondary": "#ffffff",
+                "secondary-container": "#d6e4ef",
+                "outline-variant": "#c1c6d6",
+                "on-primary-container": "#ffffff",
+                "on-secondary-fixed": "#101d25",
+                "error": "#ba1a1a",
+                "tertiary": "#9e4300",
+                "primary-fixed-dim": "#adc7ff",
+                "on-tertiary": "#ffffff",
+                "secondary": "#536069",
+                "on-background": "#1a1c1c",
+                "primary-fixed": "#d8e2ff",
+                "on-secondary-container": "#59666f",
+                "inverse-primary": "#adc7ff",
+                "on-primary-fixed-variant": "#004493",
+                "secondary-fixed": "#d6e4ef",
+                "on-secondary-fixed-variant": "#3b4851",
+                "surface-container-high": "#e8e8e8",
+                "tertiary-fixed-dim": "#ffb691",
+                "on-primary": "#ffffff",
+                "on-tertiary-fixed-variant": "#783100",
+                "background": "#f9f9f9",
+                "error-container": "#ffdad6",
+                "on-tertiary-container": "#0e0200",
+                "surface-container": "#eeeeee",
+                "surface-container-low": "#f3f3f3",
+                "on-tertiary-fixed": "#341100",
+                "on-error-container": "#93000a",
+                "on-primary-fixed": "#001a41",
+                "tertiary-container": "#c55500",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-fixed": "#ffdbcb",
+                "surface-dim": "#dadada",
+                "on-surface-variant": "#414754",
+                "surface-variant": "#e2e2e2",
+                "outline": "#727785",
+                "primary-container": "#1a73e8",
+                "surface-container-highest": "#e2e2e2"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e2e2; border-radius: 10px; }
+      </style>
+</head>
+<body class="bg-surface text-on-surface h-screen flex overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-72 bg-surface-container-low flex flex-col h-full border-r border-outline-variant/15">
+<div class="p-6 flex flex-col gap-8 h-full">
+<!-- Header Section -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">smart_toy</span>
+</div>
+<div>
+<h2 class="font-headline font-bold text-lg leading-none">AI Chatbot</h2>
+<p class="text-on-surface-variant text-xs mt-1">v2.0</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<nav class="flex flex-col gap-1 flex-grow overflow-y-auto custom-scrollbar">
+<!-- New Chat Button -->
+<button class="flex items-center gap-3 px-4 py-3 bg-surface-container-lowest text-primary rounded-xl font-medium transition-all hover:bg-white mb-6 shadow-sm border border-outline-variant/10">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    New Chat
+                </button>
+<p class="px-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">History</p>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+<span class="text-sm truncate">Market Analysis Report</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+<span class="text-sm truncate">Product Strategy Deck</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+<span class="text-sm truncate">UI Design Patterns</span>
+</button>
+</nav>
+<!-- Footer Tabs -->
+<div class="flex flex-col gap-1 pt-6 border-t border-outline-variant/15">
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+                    Settings
+                </button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+                    Help
+                </button>
+<button class="flex items-center gap-3 px-4 py-3 text-error/80 hover:bg-error-container/20 rounded-lg transition-colors mt-2">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+                    Log out
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col relative bg-surface">
+<!-- TopNavBar (Shared Component) -->
+<header class="h-16 flex items-center justify-between px-8 border-b border-outline-variant/15 bg-surface/80 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-2">
+<h1 class="font-headline font-semibold text-on-surface tracking-tight">ChatAI</h1>
+<span class="bg-primary-container/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold">PRO</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="minimize">minimize</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant/20 object-cover" data-alt="Modern professional woman profile picture avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9wk70AkNs6QH02L79_IqwNz7o6yNVg2cTbomKDHuRiZUytxux0IS1Uq7otmz3V-E35-iFDVUZ4PV_n-LUQ4SkZeLPNfAds4BGM9Ye23FDZS1Hu6TqIY7Dtdmy6u008j9CZPdjUc-jKXJuS-1Iu5Xl6Or98AytdLANOK7Hj-BWSWIzkyWdksjbFi-Kbi2x74_FOgxEhJQTnmpVsBbN7COR8aEKQbpGt6GVDBOKnOGNanqreoxRWhOldfYAXf2dYa4aYrqp4trALmFB"/>
+</div>
+</header>
+<!-- Chat Canvas -->
+<div class="flex-grow overflow-y-auto custom-scrollbar p-8 flex flex-col gap-8 max-w-5xl mx-auto w-full">
+<!-- AI Welcome Message -->
+<div class="flex gap-4 items-start pr-12">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/10">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl rounded-tl-none shadow-sm border border-outline-variant/10">
+<p class="text-on-surface leading-relaxed body-md">Good morning! I've analyzed your recent project files. Would you like to start by reviewing the <span class="text-primary font-medium">quarterly projections</span> or should we focus on the <span class="text-primary font-medium">brand redesign</span> brief today?</p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 items-start justify-end pl-12">
+<div class="bg-primary-container text-on-primary p-6 rounded-2xl rounded-tr-none shadow-md">
+<p class="leading-relaxed body-lg">Let's look at the brand redesign brief first. I need a sophisticated, minimalist layout that feels premium but accessible.</p>
+</div>
+<div class="w-10 h-10 rounded-xl overflow-hidden shrink-0 shadow-sm border border-white">
+<img alt="User" class="w-full h-full object-cover" data-alt="User profile photo showing a person smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfP27cefXDFvXs1VujNxqMRKnZwao7N8lcp0-Of1-BRsAnHyBEBBTR8D6cDUDPp6WU6GnjOqLCWH2dYoMVXvdqTWAshifBtTVbuM5pjSEKpJZCz2sSFMZzs4vdKpPJdnioCzFDbO5-Nlsh1Bp2R8bHw7RNqmT9Iu7HM_nZs42L0wuzjNixeMPAUZOYCduV4-iiUTBcg9SQ0nznRbMKlQKpMC4-HzdbJMX_xJLbphN7K_QwQrI7zhBq_WhKpwuxJ72v-lsLfps96Etq"/>
+</div>
+</div>
+<!-- AI Detailed Response with Thought Rail -->
+<div class="flex gap-4 items-start pr-12">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/10">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="flex flex-col gap-4 max-w-3xl">
+<div class="bg-surface-container p-6 rounded-2xl rounded-tl-none border border-outline-variant/5">
+<div class="flex items-center gap-2 mb-3 text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">psychology</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Thought Process</span>
+</div>
+<div class="pl-4 border-l-2 border-surface-variant flex flex-col gap-3">
+<p class="text-on-surface-variant text-sm italic">Identifying core pillars: intellectual spaciousness, editorial authority, tonal layering...</p>
+<p class="text-on-surface-variant text-sm italic">Selecting Inter typeface for Swiss-style clarity.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<h3 class="font-headline font-bold text-lg mb-4">Proposed Visual Strategy</h3>
+<p class="text-on-surface leading-relaxed mb-6">Based on your requirement for "premium but accessible," I recommend a <strong>Digital Curator</strong> approach. This moves away from rigid lines and focuses on surface-based hierarchy.</p>
+<!-- Feature Bento Grid within chat -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-2">palette</span>
+<h4 class="text-sm font-bold mb-1">Tonal Depth</h4>
+<p class="text-xs text-on-surface-variant">Using #F9F9F9 and #F3F3F3 for seamless structural division.</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-2">text_fields</span>
+<h4 class="text-sm font-bold mb-1">Swiss Type</h4>
+<p class="text-xs text-on-surface-variant">Inter display at 2.75rem with tight letter-spacing.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Omni-bar Input Area -->
+<div class="p-8 pt-0 bg-gradient-to-t from-surface via-surface to-transparent">
+<div class="max-w-4xl mx-auto relative">
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl shadow-xl p-2 transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/40 p-4 resize-none min-h-[100px] body-md" placeholder="Describe your design vision or ask for an analysis..."></textarea>
+<div class="flex items-center justify-between px-2 pb-2">
+<div class="flex gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-medium text-on-surface-variant/40 px-2">12 / 2000 tokens</span>
+<button class="bg-primary hover:bg-[#004493] text-on-primary px-6 py-2 rounded-xl font-medium flex items-center gap-2 transition-all shadow-sm">
+<span>Send</span>
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-center text-[10px] text-on-surface-variant/40 mt-4 tracking-wide uppercase">AI-generated content can be inaccurate. Please verify important information.</p>
+</div>
+</div>
+</main>
+<!-- Floating Tooltip/Context Menu (Glassmorphism Example) -->
+<div class="fixed bottom-32 right-12 bg-surface-container-lowest/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-4 flex flex-col gap-2 z-50 pointer-events-none opacity-0 lg:opacity-100 lg:pointer-events-auto transition-all translate-y-4 hover:translate-y-0">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="text-xs font-semibold text-on-surface-variant group-hover:text-primary">Draft Suggestions</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+<span class="material-symbols-outlined text-primary text-sm">history_edu</span>
+<span class="text-xs font-semibold text-on-surface-variant group-hover:text-primary">Summary Mode</span>
+</div>
+</div>
+</body></html>

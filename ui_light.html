@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="assets/js/tailwind.js"></script>
+    <script src="assets/js/marked.min.js"></script>
+    <link rel="stylesheet" href="assets/css/atom-one-light.min.css">
+    <script src="assets/js/highlight.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#bac8d3",
+                        "inverse-surface": "#2f3131",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "surface-bright": "#f9f9f9",
+                        "primary": "#005bbf",
+                        "surface": "#f9f9f9",
+                        "surface-tint": "#005bc0",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#d6e4ef",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary-container": "#ffffff",
+                        "on-secondary-fixed": "#101d25",
+                        "error": "#ba1a1a",
+                        "tertiary": "#9e4300",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#536069",
+                        "on-background": "#1a1c1c",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-container": "#59666f",
+                        "inverse-primary": "#adc7ff",
+                        "on-primary-fixed-variant": "#004493",
+                        "secondary-fixed": "#d6e4ef",
+                        "on-secondary-fixed-variant": "#3b4851",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "background": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#0e0200",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#341100",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001a41",
+                        "tertiary-container": "#c55500",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "surface-dim": "#dadada",
+                        "on-surface-variant": "#414754",
+                        "surface-variant": "#e2e2e2",
+                        "outline": "#727785",
+                        "primary-container": "#1a73e8",
+                        "surface-container-highest": "#e2e2e2"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e2e2;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface h-screen flex overflow-hidden">
+    <!-- SideNavBar (Shared Component) -->
+    <aside class="w-72 bg-surface-container-low flex flex-col h-full border-r border-outline-variant/15">
+        <div class="p-6 flex flex-col gap-8 h-full">
+            <!-- Header Section -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-primary">smart_toy</span>
+                </div>
+                <div>
+                    <h2 class="font-headline font-bold text-lg leading-none">LuminaAI</h2>
+                    <p class="text-on-surface-variant text-xs mt-1">v2.0</p>
+                </div>
+            </div>
+            <!-- Main Navigation -->
+            <nav class="flex flex-col gap-1 flex-grow overflow-y-auto custom-scrollbar">
+                <!-- New Chat Button -->
+                <button id="clearBtn"
+                    class="flex items-center gap-3 px-4 py-3 bg-surface-container-lowest text-primary rounded-xl font-medium transition-all hover:bg-white mb-6 shadow-sm border border-outline-variant/10">
+                    <span class="material-symbols-outlined" data-icon="add">add</span>
+                    New Chat
+                </button>
+                <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">History
+                </p>
+                <div id="historyList" class="flex flex-col gap-1">
+                </div>
+            </nav>
+            <!-- Footer Tabs -->
+            <div class="flex flex-col gap-1 pt-6 border-t border-outline-variant/15">
+                <button id="settingsBtn"
+                    class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+                    Settings
+                </button>
+                <button id="modelsBtn"
+                    class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-sm" data-icon="database">database</span>
+                    Models
+                </button>
+                <button
+                    class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+                    Help
+                </button>
+                <button
+                    class="flex items-center gap-3 px-4 py-3 text-error/80 hover:bg-error-container/20 rounded-lg transition-colors mt-2">
+                    <span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+                    Log out
+                </button>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-grow flex flex-col relative bg-surface">
+        <!-- TopNavBar (Shared Component) -->
+        <header
+            class="h-16 flex items-center justify-between px-8 border-b border-outline-variant/15 bg-surface/80 backdrop-blur-md sticky top-0 z-10">
+            <div class="flex items-center gap-2">
+                <h1 class="font-headline font-semibold text-on-surface tracking-tight">LuminaAI</h1>
+                <span
+                    class="bg-primary-container/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold">PRO</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-1">
+                    <button
+                        class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+                        <span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
+                    </button>
+                    <button
+                        class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+                        <span class="material-symbols-outlined" data-icon="minimize">minimize</span>
+                    </button>
+                    <button
+                        class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+                        <span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+                    </button>
+                    <button
+                        class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+                        <span class="material-symbols-outlined" data-icon="close">close</span>
+                    </button>
+                </div>
+                <div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
+                <img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant/20 object-cover"
+                    data-alt="Modern professional woman profile picture avatar"
+                    src="assets/icons/avatar.png" />
+            </div>
+        </header>
+        <!-- Chat Canvas -->
+        <div class="flex-grow overflow-y-auto custom-scrollbar p-8 flex flex-col gap-8 max-w-5xl mx-auto w-full">
+            <div id="chatCanvas" class="flex flex-col w-full pb-20"></div>
+        </div>
+        <div class="p-8 pt-0 bg-gradient-to-t from-surface via-surface to-transparent">
+            <div class="max-w-4xl mx-auto relative">
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl shadow-xl p-2 transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary">
+                    <textarea id="promptInput"
+                        class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/40 p-4 resize-none min-h-[100px] body-md"
+                        placeholder="Describe your design vision or ask for an analysis..."></textarea>
+                    <div class="flex items-center justify-between px-2 pb-2">
+                        <div class="flex gap-1">
+                            <button id="attachBtn"
+                                class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">attach_file</span>
+                            </button>
+                            <button
+                                class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">image</span>
+                            </button>
+                            <button
+                                class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">mic</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] font-medium text-on-surface-variant/40 px-2">12 / 2000
+                                tokens</span>
+                            <button id="sendBtn"
+                                class="bg-primary hover:bg-[#004493] text-on-primary px-6 py-2 rounded-xl font-medium flex items-center gap-2 transition-all shadow-sm">
+                                <span>Send</span>
+                                <span class="material-symbols-outlined text-sm">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-[10px] text-on-surface-variant/40 mt-4 tracking-wide uppercase">AI-generated
+                    content can be inaccurate. Please verify important information.</p>
+            </div>
+        </div>
+    </main>
+    <!-- Floating Tooltip/Context Menu (Glassmorphism Example) -->
+    <div
+        class="fixed bottom-32 right-12 bg-surface-container-lowest/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-4 flex flex-col gap-2 z-50 pointer-events-none opacity-0 lg:opacity-100 lg:pointer-events-auto transition-all translate-y-4 hover:translate-y-0">
+        <div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+            <span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+            <span class="text-xs font-semibold text-on-surface-variant group-hover:text-primary">Draft
+                Suggestions</span>
+        </div>
+        <div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+            <span class="material-symbols-outlined text-primary text-sm">history_edu</span>
+            <span class="text-xs font-semibold text-on-surface-variant group-hover:text-primary">Summary Mode</span>
+        </div>
+    </div>
+
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script>
+        var backend;
+        var md2html = function (text) {
+            if (typeof marked !== 'undefined') {
+                return marked.parse(text);
+            }
+            return text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        };
+
+        var applyHighlight = function (element) {
+            if (typeof hljs !== 'undefined') {
+                element.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        };
+
+        window.onload = function () {
+            if (typeof QWebChannel !== 'undefined') {
+                new QWebChannel(qt.webChannelTransport, function (channel) {
+                    backend = channel.objects.backend;
+
+                    // Attach to UI events
+                    const promptInput = document.getElementById('promptInput');
+                    const sendBtn = document.getElementById('sendBtn');
+                    const themeToggleBtn = document.getElementById('themeToggleBtn');
+                    const settingsBtn = document.getElementById('settingsBtn');
+                    const modelsBtn = document.getElementById('modelsBtn');
+                    const clearBtn = document.getElementById('clearBtn');
+                    const attachBtn = document.getElementById('attachBtn');
+
+                    if (promptInput && sendBtn) {
+                        sendBtn.addEventListener('click', function () {
+                            const text = promptInput.value.trim();
+                            if (text) {
+                                backend.send_message(text);
+                                promptInput.value = '';
+                                sendBtn.disabled = true;
+                                sendBtn.classList.remove('opacity-100');
+                                sendBtn.classList.add('opacity-50');
+                            }
+                        });
+
+                        promptInput.addEventListener('input', function () {
+                            if (promptInput.value.trim().length > 0) {
+                                sendBtn.disabled = false;
+                                sendBtn.classList.remove('opacity-50');
+                                sendBtn.classList.add('opacity-100');
+                            } else {
+                                sendBtn.disabled = true;
+                                sendBtn.classList.remove('opacity-100');
+                                sendBtn.classList.add('opacity-50');
+                            }
+                        });
+
+                        promptInput.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                                sendBtn.click();
+                            }
+                        });
+                    }
+
+                    if (themeToggleBtn) {
+                        themeToggleBtn.addEventListener('click', function () {
+                            backend.toggle_theme();
+                        });
+                    }
+
+                    if (settingsBtn) {
+                        settingsBtn.addEventListener('click', function () {
+                            backend.open_settings();
+                        });
+                    }
+
+                    if (modelsBtn) {
+                        modelsBtn.addEventListener('click', function () {
+                            backend.open_models();
+                        });
+                    }
+
+                    if (attachBtn) {
+                        attachBtn.addEventListener('click', function () {
+                            backend.attach_file();
+                        });
+                    }
+
+                    if (clearBtn) {
+                        clearBtn.addEventListener('click', function () {
+                            backend.clear_chat();
+                        });
+                    }
+
+                    // Tell backend we are ready
+                    backend.page_loaded();
+                });
+            } else {
+                console.error("QWebChannel is not defined. Ensure qrc:///qtwebchannel/qwebchannel.js is loaded.");
+            }
+        };
+
+        // Functions called by backend
+        let currentAiMessageContent = null;
+
+        window.clearHistory = function () {
+            const canvas = document.getElementById('chatCanvas');
+            if (canvas) {
+                canvas.innerHTML = '';
+            }
+        };
+
+        window.addMessage = function (role, content, avatarUrl) {
+            const canvas = document.getElementById('chatCanvas');
+            if (!canvas) return;
+
+            const MAX_MESSAGES = 50;
+            while (canvas.children.length > MAX_MESSAGES) {
+                canvas.removeChild(canvas.firstChild);
+            }
+
+            const div = document.createElement('div');
+
+            if (role === 'user') {
+                div.className = 'flex gap-4 items-start justify-end pl-4 md:pl-12 my-6';
+                div.innerHTML = `
+                    <div class="bg-primary-container text-on-primary p-4 md:p-6 rounded-2xl rounded-tr-none shadow-md max-w-[85%] break-words">
+                        <p class="leading-relaxed body-lg">${md2html(content)}</p>
+                    </div>
+                `;
+            } else {
+                div.className = 'flex gap-4 items-start pr-4 md:pr-12 my-6';
+                let iconHtml = `<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">smart_toy</span>`;
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/10">
+                        ${iconHtml}
+                    </div>
+                    <div class="flex flex-col gap-4 max-w-3xl">
+                        <div class="bg-surface-container-lowest p-4 md:p-6 rounded-2xl rounded-tl-none shadow-sm border border-outline-variant/10">
+                            <p class="text-on-surface leading-relaxed body-md content-p">${md2html(content)}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            canvas.appendChild(div);
+            div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+            if (role === 'assistant') {
+                currentAiMessageContent = div.querySelector('.content-p');
+                currentAiMessageContent.rawText = content;
+            } else {
+                currentAiMessageContent = null;
+            }
+            applyHighlight(div);
+        };
+
+        window.startAiMessage = function () {
+            addMessage('assistant', '');
+        };
+
+        window.appendAiToken = function (token) {
+            if (currentAiMessageContent) {
+                currentAiMessageContent.rawText = (currentAiMessageContent.rawText || '') + token;
+                currentAiMessageContent.innerHTML = md2html(currentAiMessageContent.rawText);
+                applyHighlight(currentAiMessageContent);
+                currentAiMessageContent.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        };
+
+        window.renderHistory = function (chats) {
+            const list = document.getElementById('historyList');
+            if (!list) return;
+            list.innerHTML = '';
+            chats.forEach(chat => {
+                const container = document.createElement('div');
+                container.className = "group flex items-center justify-between px-4 py-3 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer w-full text-left";
+                
+                const innerDiv = document.createElement('div');
+                innerDiv.className = "flex items-center gap-3 overflow-hidden flex-1";
+                innerDiv.innerHTML = `<span class="material-symbols-outlined text-sm">history</span><span class="text-sm truncate">${chat.title || 'Untitled Chat'}</span>`;
+                innerDiv.onclick = () => backend.load_chat(chat.id);
+                
+                const editBtn = document.createElement('button');
+                editBtn.className = "material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary p-1 shrink-0";
+                editBtn.innerText = "edit";
+                editBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    const newTitle = prompt("Enter new chat name:", chat.title || 'Untitled Chat');
+                    if (newTitle && newTitle.trim().length > 0) {
+                        backend.rename_chat(chat.id, newTitle.trim());
+                    }
+                };
+                
+                container.appendChild(innerDiv);
+                container.appendChild(editBtn);
+                list.appendChild(container);
+            });
+        };
+
+        window.finishAiMessage = function () {
+            currentAiMessageContent = null;
+            const promptInput = document.getElementById('promptInput');
+            if (promptInput) promptInput.focus();
+        };
+
+        window.setAiState = function (isGenerating) {
+            const sendBtn = document.getElementById('sendBtn');
+            const promptInput = document.getElementById('promptInput');
+            if (sendBtn && promptInput) {
+                if (isGenerating) {
+                    sendBtn.disabled = true;
+                    promptInput.disabled = true;
+                    sendBtn.classList.remove('opacity-100');
+                    sendBtn.classList.add('opacity-50');
+                } else {
+                    promptInput.disabled = false;
+                    if (promptInput.value.trim().length > 0) {
+                        sendBtn.disabled = false;
+                        sendBtn.classList.remove('opacity-50');
+                        sendBtn.classList.add('opacity-100');
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>
