@@ -31,10 +31,10 @@ class TitleWorker(QThread):
         
     def run(self):
         try:
-            prompt = [{"role": "user", "content": f"Summarize this text in 3 to 5 words, do not use quotes, keep it short: {self._text}"}]
-            response = self._client.generate(
+            messages = [{"role": "user", "content": f"Summarize this text in 3 to 5 words, do not use quotes, keep it short: {self._text}"}]
+            response = self._client.chat(
                 model=self._model,
-                prompt=prompt,
+                messages=messages,
                 stream=False
             )
             title = response.replace('"', '').replace("'", "").strip()
@@ -50,12 +50,11 @@ class GenerationWorker(QThread):
     completed = pyqtSignal(str)
     error = pyqtSignal(str)
 
-    def __init__(self, client, model, prompt, system, temperature, max_tokens, top_p, stream):
+    def __init__(self, client, model, messages, temperature, max_tokens, top_p, stream):
         super().__init__()
         self._client = client
         self._model = model
-        self._prompt = prompt
-        self._system = system
+        self._messages = messages
         self._temperature = temperature
         self._max_tokens = max_tokens
         self._top_p = top_p
@@ -80,10 +79,9 @@ class GenerationWorker(QThread):
                             self._token_buffer.clear()
                             self._last_emit_time = current_time
 
-                self._client.generate(
+                self._client.chat(
                     model=self._model,
-                    prompt=self._prompt,
-                    system=self._system,
+                    messages=self._messages,
                     temperature=self._temperature,
                     max_tokens=self._max_tokens,
                     top_p=self._top_p,
@@ -94,10 +92,9 @@ class GenerationWorker(QThread):
                     self.token_received.emit("".join(self._token_buffer))
                 self.completed.emit("".join(full_response))
             else:
-                response = self._client.generate(
+                response = self._client.chat(
                     model=self._model,
-                    prompt=self._prompt,
-                    system=self._system,
+                    messages=self._messages,
                     temperature=self._temperature,
                     max_tokens=self._max_tokens,
                     top_p=self._top_p,
@@ -277,11 +274,11 @@ class MainWindow(QMainWindow):
             try:
                 models = self._ollama_client.get_models()
                 if models:
-                    model = models[0].get("name", "llama2")
+                    model = models[0].get("name", "llama3.2:latest")
                 else:
-                    model = "llama2"
+                    model = "llama3.2:latest"
             except Exception:
-                model = "llama2"
+                model = "llama3.2:latest"
 
         # Record user message
         self._chat_manager.add_message("user", text)
@@ -315,7 +312,7 @@ class MainWindow(QMainWindow):
         # The chat_manager already added the latest user message, so we don't append again
 
         self._current_worker = GenerationWorker(
-            self._ollama_client, model, prompts, system, temperature, max_tokens, top_p, stream
+            self._ollama_client, model, prompts, temperature, max_tokens, top_p, stream
         )
         self._current_worker.token_received.connect(self._on_token_received)
         self._current_worker.completed.connect(self._on_generation_completed)
@@ -341,7 +338,7 @@ class MainWindow(QMainWindow):
                 if msg.get("role") == "user":
                     user_msg = msg.get("content", "")
             if user_msg:
-                model = self._settings.default_model or "llama2"
+                model = self._settings.default_model or "llama3.2:latest"
                 self._title_worker = TitleWorker(self._ollama_client, model, user_msg)
                 self._title_worker.completed.connect(self._on_title_generated)
                 self._title_worker.start()

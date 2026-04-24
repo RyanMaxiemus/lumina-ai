@@ -10,7 +10,7 @@ class SettingsManager:
 
     DEFAULT_SETTINGS = {
         "theme": "dark",  # "dark" or "light"
-        "default_model": "llama2",
+        "default_model": "llama3.2:latest",
         "system_prompt": "You are a helpful AI assistant.",
         "temperature": 0.7,
         "max_tokens": 2048,
@@ -123,7 +123,7 @@ class SettingsManager:
     @property
     def default_model(self) -> str:
         """Get default model."""
-        return self.get("default_model", "llama2")
+        return self.get("default_model", "llama3.2:latest")
 
     @default_model.setter
     def default_model(self, value: str) -> None:

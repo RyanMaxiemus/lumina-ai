@@ -157,6 +157,146 @@ class OllamaClient:
         except requests.exceptions.RequestException as e:
             raise APIError(f"Request failed: {str(e)}")
 
+    def chat(
+        self,
+        model: str,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.7,
+        max_tokens: int = 2048,
+        top_p: float = 0.9,
+        stream: bool = True,
+        callback: Optional[Callable[[str], None]] = None,
+    ) -> str:
+        """Generate a response using the chat API.
+
+        Args:
+            model: Model name to use.
+            messages: List of message dictionaries with 'role' and 'content'.
+            temperature: Sampling temperature (0.0 to 2.0).
+            max_tokens: Maximum tokens to generate.
+            top_p: Nucleus sampling parameter (0.0 to 1.0).
+            stream: Whether to stream the response.
+            callback: Optional callback function for streaming responses.
+
+        Returns:
+            Full generated response text.
+
+        Raises:
+            ConnectionError: If cannot connect to server.
+            ModelError: If model is not found.
+            APIError: If API returns an error.
+        """
+        url = f"{self._base_url}/api/chat"
+
+        payload = {
+            "model": model,
+            "messages": messages,
+            "stream": stream,
+            "options": {
+                "temperature": temperature,
+                "num_predict": max_tokens,
+                "top_p": top_p,
+            }
+        }
+
+        try:
+            if stream and callback:
+                return self._stream_chat(url, payload, callback)
+            else:
+                return self._chat_non_stream(url, payload)
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                # Fallback to /api/generate for older Ollama versions
+                return self._chat_fallback(model, messages, temperature, max_tokens, top_p, stream, callback)
+            raise APIError(f"Request failed: {str(e)}", e.response.status_code)
+        except requests.exceptions.ConnectionError as e:
+            raise ConnectionError(f"Cannot connect to Ollama at {self._base_url}. Is Ollama running?")
+        except requests.exceptions.Timeout:
+            raise APIError("Request timed out")
+        except requests.exceptions.RequestException as e:
+            raise APIError(f"Request failed: {str(e)}")
+
+    def _chat_fallback(
+        self,
+        model: str,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.7,
+        max_tokens: int = 2048,
+        top_p: float = 0.9,
+        stream: bool = True,
+        callback: Optional[Callable[[str], None]] = None,
+    ) -> str:
+        """Fallback to /api/generate for older Ollama versions."""
+        # Convert messages to a simple prompt
+        prompt_parts = []
+        system_msg = None
+        
+        for msg in messages:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            if role == "system":
+                system_msg = content
+            elif role == "user":
+                prompt_parts.append(f"User: {content}")
+            elif role == "assistant":
+                prompt_parts.append(f"Assistant: {content}")
+        
+        prompt = "\n\n".join(prompt_parts) + "\n\nAssistant:"
+        
+        return self.generate(
+            model=model,
+            prompt=prompt,
+            system=system_msg,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            top_p=top_p,
+            stream=stream,
+            callback=callback,
+        )
+
+    def _stream_chat(
+        self,
+        url: str,
+        payload: Dict,
+        callback: Callable[[str], None]
+    ) -> str:
+        """Handle streaming chat response."""
+        response = self._session.post(url, json=payload, stream=True, timeout=120)
+        response.raise_for_status()
+
+        full_response = []
+
+        for line in response.iter_lines():
+            if line:
+                try:
+                    data = json.loads(line)
+                    if "message" in data and "content" in data["message"]:
+                        token = data["message"]["content"]
+                        if token:  # Skip empty tokens
+                            full_response.append(token)
+                            callback(token)
+
+                    if data.get("done", False):
+                        break
+
+                except json.JSONDecodeError:
+                    continue
+
+        return "".join(full_response)
+
+    def _chat_non_stream(self, url: str, payload: Dict) -> str:
+        """Handle non-streaming chat response."""
+        payload["stream"] = False
+
+        response = self._session.post(url, json=payload, timeout=120)
+        response.raise_for_status()
+
+        data = response.json()
+        if "message" in data:
+            return data["message"].get("content", "")
+        return ""
+
     def _stream_generate(
         self,
         url: str,
